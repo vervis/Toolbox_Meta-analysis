@@ -1,0 +1,18 @@
+First_Author ,Mean_without,SD_without,Number_without,Mean_with,SD_with,Number_with,Design ,No_of_Stim
+Anderson 2014,3.04,1.55,123,3.15,1.52,121,Within,5
+Bressen 2008,5.29,1.71,52,5.28,1.5,156,Between,12
+Bressen 2008 replicate by Fraizer 2015,4.76,1.71,263,4.41,1.5,263,between,12
+Deng 2015,3.659,0.98,90,3.83,0.98,90,Within,50
+Dunn 2010,5.08,4.136,40,6.67,3.54,40,Between,12
+Eva 2006,2.96,0.58,38,3.65,0.55,38,Between,10
+Gouda-Vossos (Unpublished a),45.76,20,62,44.78,19.85,197,Between,9
+Gouda-Vossos (Unpublished b),56.27,21.36,113,55.6,21.71,128,Between,12
+Gouda-Vossos 2016,43.95,21.06,121,45.46,21.02,122,Between,18
+Hill 2007,3.63,1.172,159,4.72,0.656,159,Between,10
+Milonoff 2007,4.41,0.9,67,4.52,0.82,71,Between,10
+Parker 2009,0.3983,0.5859,97,0.5269,0.7827,97,Within,1
+Rodeheffer 2016 exp 1,3.43,0.86,30,3.905,0.64,74,Between,7
+Rodeheffer 2016 exp 2,3.7,0.63,47,4.1,0.49,97,Between,7
+Uller 2002,4.185,0.13,97,3.905,0.125,97,Between,2
+Waynforth 2007,3.65,2.11,112,3.74,1.51,112,Within,112
+Yorzinski 2010,3.84,2.12,30,3.85,2.27,30,Within,36
