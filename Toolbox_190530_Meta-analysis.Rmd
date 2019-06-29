@@ -1,0 +1,123 @@
+---
+title: "Meta-analysis using metafor"
+author: "Vernon Visser"
+date: "21 June 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction to meta-analysis
+
+In this Markdown document I provide a little bit of code to help get you started with doing a basic meta-anlysis.
+
+The example used here is from [Gouda-Vossos et al. (2018)](https://doi.org/10.1007/s40750-018-0099-y) and deals with mate choice in humans. The
+authors did a meta-analysis of experiments in which the "attractiveness" of a person was rated before and after a treatment, which involved either "addition" or "augmentation" designs. In this example we are only going to look at their experiment (i), which was an "addition" experiment in which the attractiveness of females was rated when they were alone (the "control") and then when they were surrounded by a number of men (the "treatment").
+
+![An example of a "mate choice experiment" in humans. From [Dunn & Doria (2010)](http://dx.doi.org/10.1037/h0099305).](Mate_choice_addition.png)
+  
+In this Toolbox RMarkdown document, you will find out how to:
+
+  * Calculate effect sizes
+  * Run fixed-effect and random-effects meta-analytic models
+  * Run a meta-regression
+  * Produce forest plots
+  * Check for publication bias
+
+
+## Getting started in R
+
+Load packages and get data
+
+```{r, message=F}
+library(metafor) #Install this package first if you do not have it
+dat = read.csv('Gouda-Vossos_S2.csv')
+head(dat)
+```
+
+## Calculate effect sizes
+
+We use the log of the response ratio (lnRR), which is the mean of the treatment (M_T) divided by the mean of the control (M_C)
+
+```{r}
+dat = escalc(measure="ROM", m1i=Mean_with, m2i=Mean_without, sd1i=SD_with, sd2i=SD_without, n1i=Number_with,
+           n2i=Number_without, data=dat)
+head(dat)
+```
+
+## Fixed-effect and random-effects meta-analytic models for (i) 
+
+In the paper, the authors present the results of a random-effects meta-analytic model, which is more conservative and accounts for 
+non-independence of effect sizes (i.e. assumes the studies do not come from the same population, which is a realistic assumption).
+
+The fixed-effect model is merely provided for comparison.
+
+```{r}
+#Random-effects model
+model_i_re = rma(yi, vi, data=dat, method='REML')
+summary(model_i_re)
+
+#Fixed-effect model
+model_i_fe = rma(yi, vi, data=dat, method='FE')
+summary(model_i_fe)
+```
+
+## Meta-regression model for (i)
+
+Moderators are what are termed predictors in ,for example, multiple regression. In the Gouda-Vossos et al. (2018) paper they did not use any 
+moderators because their sample sizes were too low, but below is an example of what a meta-regression would look like with "No_of_Stim" as
+a predictor.
+
+```{r}
+model_i_mod = rma(yi, vi, mods = No_of_Stim, data=dat, method='REML')
+summary(model_i_mod)
+```
+
+
+## Forest plot
+
+Forest plots are a standard way of presenting meta-analysis results. The individual study effect sizes are shown with their corresponding
+95% confidence intervals, as well as the overall effect size at the bottom of the plot.
+
+```{r}
+forest(model_i_re, slab = dat$First_Author, pch=16)
+```
+
+## Publication bias
+
+It is important to test for publication bias in meta-analyses. There are numerous sources of publication bias, but can include, for example, the tendency to only report studies with significant results or large effects, or the difficulty in acquiring studies in the grey or foreign literature.
+
+Funnel plots are one of the most commonly used methods to look for publication bias. Essentially, the funnel plot provides an indication of whether there are "gaps" in the studies used to conduct the meta-analysis. Very often studies with low sample sizes (y-axis) and small effect sizes (x-axis) are missing.
+
+```{r}
+#Funnel plot
+funnel(model_i_re)
+```
+
+Trim-and-fill analyses calculate the number of "missing" studies. They do this by removing the smallest studies (trimming) and recalculating
+the overall effect size (filling) until there is symmetry. A number of estimators of the number of missing studies are used, termed L, R & Q. Below, you can see the results for all three of these estimators.
+
+```{r}
+#Trim and fill
+tfL0 = trimfill(model_i_re, estimator="L0")
+tfL0
+
+tfR0 = trimfill(model_i_re, estimator="R0")
+tfR0
+
+tfQ0 = trimfill(model_i_re, estimator="Q0")
+tfQ0
+```
+
+## Further reading
+
+This brief introduction obviously ignores many important concepts and methods available for meta-analysis. For more information on this
+subject, I suggest reading:
+
+  * [Nakagawa et al. 2017. BMC Ecology 15:18](https://doi.org/10.1186/s12915-017-0357-7)
+  * [Nakagawa & Cuthill 2007. Biological Reviews 82](https://doi.org/10.1111/j.1469-185X.2007.00027.x)
+  * [Harrison 2011. Methods in Ecology and Evolution 2](https://doi.org/10.1111/j.2041-210X.2010.00056.x)
+  * [Koricheva, Gurevitch & Mengersen 2013. Handbook of Meta-analysis in Ecology and Evolution](https://press.princeton.edu/titles/10045.html)
+  * [Moher et al. 2009. Annals of Internal Medicine 151](https://doi.org/10.7326/0003-4819-151-4-200908180-00135)
