@@ -1,7 +1,7 @@
 ---
 title: "Meta-analysis using metafor"
 author: "Vernon Visser"
-date: "21 June 2019"
+date: "30 May 2019"
 output: html_document
 ---
 
@@ -11,14 +11,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction to meta-analysis
 
-In this Markdown document I provide a little bit of code to help get you started with doing a basic meta-anlysis.
+As the number of scientific studies continues to grow exponentially, so does the opportunity to gain insights on a specific hypothesis using data from a large number different studies. Literature reviews are useful for providing a synthesis on the current understanding of a particular research topic, but are largely qualitative in nature and are unable to quantitatively assess conflicting results from different studies.
+Meta-analysis provides a statistical framework for combining and comparing different studies to test a specific research hypothesis.
 
-The example used here is from [Gouda-Vossos et al. (2018)](https://doi.org/10.1007/s40750-018-0099-y) and deals with mate choice in humans. The
-authors did a meta-analysis of experiments in which the "attractiveness" of a person was rated before and after a treatment, which involved either "addition" or "augmentation" designs. In this example we are only going to look at their experiment (i), which was an "addition" experiment in which the attractiveness of females was rated when they were alone (the "control") and then when they were surrounded by a number of men (the "treatment").
+In this SEEC Stats Toolbox Seminar you will find out about:
+
+  1. how to conduct a rigorous meta-analysis,
+  2. learn what effect sizes are in meta-analyses,
+  3. find out about useful R packages and tools for conducting meta-analyses.
+
+To find out more, download/clone all the Toolbox files from GitHub [here](https://github.com/vervis/Toolbox_Meta-analysis), or get the [slides](https://github.com/vervis/Toolbox_Meta-analysis), [video](http://meeting.uct.ac.za/p76rhinglse/) and [code](https://github.com/vervis/Toolbox_Meta-analysis) separately.
+
+The example used for this Toolbox is from [Gouda-Vossos et al. (2018)](https://doi.org/10.1007/s40750-018-0099-y) and deals with mate choice in humans. The authors did a meta-analysis of experiments in which the "attractiveness" of a person was rated before and after a treatment, which involved either "addition" or "augmentation" designs. In this example we are only going to look at their experiment (i), which was an "addition" experiment in which the attractiveness of females was rated when they were alone (the "control") and then when they were surrounded by a number of men (the "treatment").
 
 ![An example of a "mate choice experiment" in humans. From [Dunn & Doria (2010)](http://dx.doi.org/10.1037/h0099305).](Mate_choice_addition.png)
-  
-In this Toolbox RMarkdown document, you will find out how to:
+
+In this Markdown document I provide a little bit of code to help get you started with doing a basic meta-anlysis. You will find out how to:
 
   * Calculate effect sizes
   * Run fixed-effect and random-effects meta-analytic models
