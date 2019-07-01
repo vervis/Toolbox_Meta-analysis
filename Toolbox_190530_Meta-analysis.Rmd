@@ -1,5 +1,5 @@
 ---
-title: "Meta-analysis using metafor"
+title: "An introduction to meta-analysis"
 author: "Vernon Visser"
 date: "30 May 2019"
 output: html_document
